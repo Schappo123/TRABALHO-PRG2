@@ -7,7 +7,7 @@
 void inicializar_sistema () {
     sistema_t sistema = {0};
     int opcao;
-    recuperar_dados(&sistema);
+    ultimo_id_paciente(&sistema);
 
     do {
         inicializar_interface();
@@ -22,7 +22,7 @@ void inicializar_sistema () {
     } while (opcao >= 0 && opcao < 7);
 }
 
-void recuperar_dados (sistema_t *sistema) {
+void ultimo_id (sistema_t *sistema) {
         int id;
         char linha[300];
 
