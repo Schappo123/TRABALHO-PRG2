@@ -21,4 +21,5 @@ add_executable(TRABALHO-PRG2 main.c
         src/sistema.h
 )
 
+
 target_link_libraries(TRABALHO-PRG2 PUBLIC libprg)
