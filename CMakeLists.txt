@@ -19,6 +19,7 @@ add_executable(TRABALHO-PRG2 main.c
         src/interface.c
         src/sistema.c
         src/sistema.h
+        src/interface.h
 )
 
 
