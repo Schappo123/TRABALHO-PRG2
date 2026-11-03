@@ -12,3 +12,12 @@ void inicializar_interface() {
     printf("============================================\n");
     printf("Escolha uma opcao: ");
 }
+
+void consultar_paciente () {
+    printf("===== CONSULTAR INFORMAÇÕES DO PACIENTE =====\n\n");
+    printf("1 - Consultar pelo nome\n");
+    printf("2 - Consultar pelo ID\n");
+    printf("0 - Voltar\n");
+    printf("============================================\n");
+    printf("Escolha uma opcao: ");
+}

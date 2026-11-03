@@ -6,7 +6,7 @@
 
 void inicializar_sistema () {
     sistema_t sistema = {0};
-    int opcao;
+    int opcao, opcao2;
     ultimo_id_paciente(&sistema);
 
     do {
