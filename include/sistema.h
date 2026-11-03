@@ -20,9 +20,11 @@ typedef struct {
     int quantidade_pacientes;
     funcionario_t funcionario[100];
     int quantidade_funcionarios;
+    int ultimo_id;
 } sistema_t;
 
 void inicializar_sistema ();
+void ultimo_id_paciente (sistema_t *sistema);
 void cadastrar_paciente(sistema_t *cadastrar);
 
 #endif //TRABALHO_PRG2_SISTEMA_H
