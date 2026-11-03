@@ -22,7 +22,7 @@ void inicializar_sistema () {
     } while (opcao >= 0 && opcao < 7);
 }
 
-void ultimo_id (sistema_t *sistema) {
+void ultimo_id_paciente (sistema_t *sistema) {
         int id;
         char linha[300];
 
