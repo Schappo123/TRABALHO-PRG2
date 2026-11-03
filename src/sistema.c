@@ -18,6 +18,9 @@ void inicializar_sistema () {
                 cadastrar_paciente(&sistema);
                 break;
             }
+            case 2: {
+                consultar_paciente();
+            }
         }
     } while (opcao >= 0 && opcao < 7);
 }
@@ -46,27 +49,27 @@ void ultimo_id_paciente (sistema_t *sistema) {
         fclose(arquivo);
     }
 
-void cadastrar_paciente(sistema_t *cadastrar) {
-    int i = cadastrar->quantidade_pacientes;
+void cadastrar_paciente(sistema_t *sistema) {
+    int i = sistema->quantidade_pacientes;
     printf("\n===== CADASTRO DE PACIENTES =====\n\n");
 
     printf("Digite o nome do paciente: ");
     getchar(); // remove o "espaço" que fica no buffer.
-    fgets(cadastrar->paciente[i].nome, 50, stdin);
-    cadastrar->paciente[i].nome[strcspn(cadastrar->paciente[i].nome, "\n")] = '\0'; // remove o "\n" e "\0" do final do arquivo.
+    fgets(sistema->paciente[i].nome, 50, stdin);
+    sistema->paciente[i].nome[strcspn(sistema->paciente[i].nome, "\n")] = '\0'; // remove o "\n" e "\0" do final do arquivo.
 
     printf("\nDigite a idade do paciente: ");
-    scanf("%d", &cadastrar->paciente[i].idade);
+    scanf("%d", &sistema->paciente[i].idade);
 
     printf("\nDigite a data de nascimento do paciente: ");
-    scanf("%19s", cadastrar->paciente[i].data_nascimento);
+    scanf("%19s", sistema->paciente[i].data_nascimento);
 
     getchar();
     printf("\nDigite os problemas do paciente: ");
-    fgets(cadastrar->paciente[i].descricao, 100, stdin);
-    cadastrar->paciente[i].descricao[strcspn(cadastrar->paciente[i].descricao, "\n")] = '\0';
+    fgets(sistema->paciente[i].descricao, 100, stdin);
+    sistema->paciente[i].descricao[strcspn(sistema->paciente[i].descricao, "\n")] = '\0';
 
-    cadastrar->paciente[i].ID = i+1;
+    sistema->paciente[i].ID = i+1;
 
     FILE *arquivo = fopen ("../dados/pacientes.txt", "a");
 
@@ -76,16 +79,24 @@ void cadastrar_paciente(sistema_t *cadastrar) {
     }
 
     fprintf(arquivo, "%d;%s;%d;%s;%s\n",
-    cadastrar->paciente[i].ID,
-    cadastrar->paciente[i].nome,
-    cadastrar->paciente[i].idade,
-    cadastrar->paciente[i].data_nascimento,
-    cadastrar->paciente[i].descricao);
+    sistema->paciente[i].ID,
+    sistema->paciente[i].nome,
+    sistema->paciente[i].idade,
+    sistema->paciente[i].data_nascimento,
+    sistema->paciente[i].descricao);
 
 
     fclose(arquivo);
 
-    cadastrar->quantidade_pacientes++;
+    sistema->quantidade_pacientes++;
 
     printf("PACIENTE CADASTRADO COM SUCESSO!\n");
+}
+
+void consultar_paciente_nome(sistema_t *sistema) {
+
+}
+
+void consultar_paciente_ID(sistema_t *sistema) {
+
 }
