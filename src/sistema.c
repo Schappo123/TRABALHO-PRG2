@@ -1,6 +1,23 @@
-#include "sistema.h"
+#include "../include/sistema.h"
+#include "../include/interface.h"
 #include <stdio.h>
 #include "libprg/libprg.h"
+
+void inicializar_sistema () {
+    sistema_t sistema = {0};
+    int opcao;
+    do {
+        inicializar_interface();
+        scanf("%d", &opcao);
+
+        switch (opcao) {
+            case 1: {
+                cadastrar_paciente(&sistema);
+                break;
+            }
+        }
+    } while (opcao >= 0 && opcao < 7);
+}
 
 void cadastrar_paciente(sistema_t *cadastrar) {
     int i = cadastrar->quantidade_pacientes;

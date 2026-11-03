@@ -22,6 +22,7 @@ typedef struct {
     int quantidade_funcionarios;
 } sistema_t;
 
+void inicializar_sistema ();
 void cadastrar_paciente(sistema_t *cadastrar);
 
 #endif //TRABALHO_PRG2_SISTEMA_H
