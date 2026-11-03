@@ -2,6 +2,7 @@
 #define TRABALHO_PRG2_SISTEMA_H
 
 typedef struct {
+    int ID;
     char nome[50];
     int idade;
     char data_nascimento[20];
@@ -9,9 +10,8 @@ typedef struct {
 }paciente_t;
 
 typedef struct {
+    int ID;
     char nome[50];
-    int idade;
-    char data_nascimento[20];
     char especialidade[50];
 }funcionario_t;
 
