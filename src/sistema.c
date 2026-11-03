@@ -20,6 +20,14 @@ void inicializar_sistema () {
             }
             case 2: {
                 consultar_paciente();
+                scanf("%d", &opcao2);
+                if (opcao2 == 1) {
+                    consultar_paciente_nome();
+                } else if (opcao2 == 2) {
+                    consultar_paciente_ID(&sistema);
+                } else if (opcao2 == 0) {
+                    break;
+                }
             }
         }
     } while (opcao >= 0 && opcao < 7);
@@ -93,8 +101,46 @@ void cadastrar_paciente(sistema_t *sistema) {
     printf("PACIENTE CADASTRADO COM SUCESSO!\n");
 }
 
-void consultar_paciente_nome(sistema_t *sistema) {
+void consultar_paciente_nome() {
+    char nome[50];
+    char linha[100];
+    paciente_t paciente;
+    int encontrado = 0;
 
+    printf("Digite o nome do paciente buscado: \n");
+    getchar();
+    fgets(nome, 50, stdin);
+    nome[strcspn(nome, "\n")] = '\0';
+
+    FILE *arquivo = fopen ("../dados/pacientes.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return;
+    }
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        sscanf (linha, "%d;%49[^;];%d;%19[^;];%99[^\n]",
+        &paciente.ID,
+        paciente.nome,
+        &paciente.idade,
+        paciente.data_nascimento,
+        paciente.descricao);
+
+        if (strcmp (nome, paciente.nome) == 0) {
+            printf("===== PACIENTE ENCONTRADO =====\n\n");
+            printf("ID: %d\n", paciente.ID);
+            printf("Nome: %s\n", paciente.nome);
+            printf("Idade: %d\n", paciente.idade);
+            printf("Data de nascimento: %s\n", paciente.data_nascimento);
+            printf("Problemas do paciente: %s\n", paciente.descricao);
+
+            encontrado = 1;
+        }
+    }
+    if (!encontrado) {
+        printf("PACIENTE NÃO ENCONTRADO!\n");
+    }
+    fclose(arquivo);
 }
 
 void consultar_paciente_ID(sistema_t *sistema) {

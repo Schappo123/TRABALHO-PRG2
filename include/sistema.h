@@ -26,7 +26,7 @@ typedef struct {
 void inicializar_sistema ();
 void ultimo_id_paciente (sistema_t *sistema);
 void cadastrar_paciente(sistema_t *sistema);
-void consultar_paciente_nome(sistema_t *sistema);
+void consultar_paciente_nome();
 void consultar_paciente_ID(sistema_t *sistema);
 
 #endif //TRABALHO_PRG2_SISTEMA_H
