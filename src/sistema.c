@@ -57,7 +57,7 @@ void inicializar_sistema () {
 }
 
 
-void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info dos pacientes nos arquivos .txt e insere na arvore binaria de pesquisa do libprg
+void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info do pacientes.txt e insere na arvore binaria de pesquisa do libprg
         int id;
         char linha[300];
 
@@ -82,7 +82,7 @@ void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info dos paci
         fclose(arquivo);
     }
 
-void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info dos funcionarios nos arquivos .txt e insere na AVL do libprg
+void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info do funcionarios.txt e insere na AVL do libprg
     int id;
     char linha[300];
 
@@ -94,6 +94,35 @@ void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info dos f
     while (fgets(linha, sizeof(linha), arquivo)) {
         if (sscanf(linha, "%d;", &id) == 1) {
             avl_inserir(&sistema->funcionarios, id);
+        }
+    }
+    fclose(arquivo);
+}
+
+void recuperar_info_atendimentos (sistema_t *sistema) { //recupera as info do agendamentos.txt e insere na lista encadeada dupla do libprg
+    int id;
+    char linha[300];
+
+    FILE *arquivo = fopen("../dados/pacientes.txt", "r");
+
+    sistema->quantidade_atendimentos = 0;
+    sistema->ultimo_id_atendimentos = 0;
+
+    if (arquivo == NULL)
+        return;
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;", &id) == 1) {
+            sistema->quantidade_atendimentos++;
+
+            if (id > sistema->ultimo_id_atendimentos) {
+                sistema->ultimo_id_atendimentos = id;
+            }
+            lista_dupla_inserir_fim(&sistema->atendimentos, id);
+
+            if (id > sistema->ultimo_id_atendimentos) {
+                sistema->ultimo_id_atendimentos = id;
+            }
         }
     }
     fclose(arquivo);
