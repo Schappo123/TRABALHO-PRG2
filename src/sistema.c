@@ -9,8 +9,10 @@ void inicializar_sistema () {
     int opcao_menu, opcao_consultar_paciente, opcao_gerenciar_atendimento;
 
     abp_inicializar(&sistema.pacientes);
+    avl_inicializar(&sistema.funcionarios);
     lista_dupla_inicializar(&sistema.atendimentos);
     recuperar_info_pacientes(&sistema);
+    recuperar_info_funcionarios(&sistema);
 
     do {
         inicializar_interface();
@@ -50,6 +52,7 @@ void inicializar_sistema () {
         }
     } while (opcao_menu >= 0 && opcao_menu < 7);
     abp_libera(&sistema.pacientes);
+    avl_libera(&sistema.funcionarios);
     lista_dupla_libera(&sistema.atendimentos);
 }
 
@@ -61,7 +64,7 @@ void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info dos paci
         FILE *arquivo = fopen("../dados/pacientes.txt", "r");
 
         sistema->quantidade_pacientes = 0;
-        sistema->ultimo_id = 0;
+        sistema->ultimo_id_pacientes = 0;
 
         if (arquivo == NULL)
             return;
@@ -70,8 +73,8 @@ void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info dos paci
             if (sscanf(linha, "%d;", &id) == 1) {
                 sistema->quantidade_pacientes++;
 
-                if (id > sistema->ultimo_id) {
-                    sistema->ultimo_id = id;
+                if (id > sistema->ultimo_id_pacientes) {
+                    sistema->ultimo_id_pacientes = id;
                 }
                 abp_inserir(&sistema->pacientes, id);
             }
@@ -116,12 +119,13 @@ void cadastrar_paciente(sistema_t *sistema) {
     fgets(sistema->paciente[i].descricao, 100, stdin);
     sistema->paciente[i].descricao[strcspn(sistema->paciente[i].descricao, "\n")] = '\0';
 
-    sistema->paciente[i].ID = ++sistema->ultimo_id;
+    sistema->paciente[i].ID = ++sistema->ultimo_id_pacientes;
 
     FILE *arquivo = fopen ("../dados/pacientes.txt", "a");
 
     if (arquivo == NULL) {
         printf("\nErro ao abrir o arquivo!\n");
+        sistema->ultimo_id_pacientes--;
         return;
     }
 
@@ -225,15 +229,61 @@ void consultar_paciente_ID(sistema_t *sistema) {
 }
 
 void agendar_atendimentos (sistema_t *sistema) {
+    int id_paciente, id_funcionario;
+    atendimento_t atendimento;
+
     printf("\n===== AGENDAR ATENDIMENTO =====\n\n");
     printf("Digite o ID do paciente: \n");
+    scanf("%d", &id_paciente);
+
+    if (!abp_buscar(sistema->pacientes, id_paciente)) {
+        printf("Paciente não encontrado!\n");
+        return;
+    }
 
     printf("Digite o ID do funcionario: \n");
+    scanf("%d", &id_funcionario);
+
+    if (!avl_buscar(sistema->funcionarios, id_funcionario)) {
+        printf("Funcionario não encontrado!\n");
+        return;
+    }
+
+    atendimento.ID_paciente = id_paciente;
+    atendimento.ID_funcionario = id_funcionario;
+
     printf("Digite uma data para o atendimento: \n");
+    scanf("%19s", atendimento.data);
+
     printf("Digite um horario para o atendimento: \n");
+    scanf("%9s", atendimento.horario);
 
+    atendimento.ID = ++sistema->ultimo_id_atendimentos;
 
+    strcpy (atendimento.status, "Agendado");
+
+    FILE *arquivo = fopen ("../dados/agendamentos.txt", "a");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        sistema->ultimo_id_atendimentos--;
+        return;
+    }
+    fprintf(arquivo, "%d;%d;%d;%s;%s;%s\n",
+            atendimento.ID,
+            atendimento.ID_paciente,
+            atendimento.ID_funcionario,
+            atendimento.data,
+            atendimento.horario,
+            atendimento.status);
+
+    fclose(arquivo);
+
+    if (lista_dupla_inserir_fim(&sistema->atendimentos, atendimento.ID)) {
+        printf("\nAtendimento agendado com sucesso!\n");
+    }
 }
+
 
 void consultar_atendimentos (sistema_t *sistema) {
 
