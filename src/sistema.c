@@ -54,7 +54,7 @@ void inicializar_sistema () {
 }
 
 
-void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info dos pacientes nos arquivos .txt e insere nas estruturas de dados do libprg
+void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info dos pacientes nos arquivos .txt e insere na arvore binaria de pesquisa do libprg
         int id;
         char linha[300];
 
@@ -79,7 +79,7 @@ void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info dos paci
         fclose(arquivo);
     }
 
-void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info dos funcionarios nos arquivos .txt e insere nas estruturas de dados do libprg
+void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info dos funcionarios nos arquivos .txt e insere na AVL do libprg
     int id;
     char linha[300];
 
@@ -94,7 +94,6 @@ void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info dos f
         }
     }
     fclose(arquivo);
-}
 }
 
 void cadastrar_paciente(sistema_t *sistema) {
