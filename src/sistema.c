@@ -31,10 +31,14 @@ void inicializar_sistema () {
                     break;
                 }
             }
+            case 3: {
+
+            }
         }
     } while (opcao >= 0 && opcao < 7);
     abp_libera(&sistema.pacientes);
 }
+
 
 void recuperar_ultimo_id_cadastrado (sistema_t *sistema) {
         int id;
@@ -190,4 +194,22 @@ void consultar_paciente_ID(sistema_t *sistema) {
     } else {
         printf("PACIENTE NÃO ENCONTRADO!\n");
     }
+}
+
+void agendar_atendimentos (sistema_t *sistema) {
+    printf("\n===== AGENDAR ATENDIMENTO =====\n\n");
+
+}
+
+void consultar_atendimentos (sistema_t *sistema) {
+
+}
+
+void cancelar_atendimentos (sistema_t *sistema) {
+
+}
+
+void alterar_atendimentos (sistema_t *sistema) {
+
+
 }
