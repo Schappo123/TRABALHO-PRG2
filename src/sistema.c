@@ -154,5 +154,40 @@ void consultar_paciente_nome() {
 }
 
 void consultar_paciente_ID(sistema_t *sistema) {
+    int id;
+    char linha[100];
+    paciente_t paciente;
 
+    printf("Digite o ID do paciente: \n");
+    scanf("%d", &id);
+
+    if (abp_buscar(sistema->pacientes, id)) {
+        FILE *arquivo = fopen ("../dados/pacientes.txt", "r");
+
+        if (arquivo == NULL) {
+            printf("Erro ao abrir o arquivo!\n");
+            return;
+        }
+        while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+            if (sscanf(linha, "%d;%49[^;];%d;%19[^;];%99[^\n]",
+                &paciente.ID,
+                paciente.nome,
+                &paciente.idade,
+                paciente.data_nascimento,
+                paciente.descricao) != 5) {
+                }
+            if (paciente.ID == id) {
+                printf("===== PACIENTE ENCONTRADO =====\n\n");
+                printf("ID: %d\n", paciente.ID);
+                printf("Nome: %s\n", paciente.nome);
+                printf("Idade: %d\n", paciente.idade);
+                printf("Data de nascimento: %s\n", paciente.data_nascimento);
+                printf("Problemas do paciente: %s\n", paciente.descricao);
+                break;
+            }
+        }
+        fclose(arquivo);
+    } else {
+        printf("PACIENTE NÃO ENCONTRADO!\n");
+    }
 }
