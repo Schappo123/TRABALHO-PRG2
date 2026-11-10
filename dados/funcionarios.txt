@@ -1,0 +1,10 @@
+1;Ana Paula Martins;Psicologia
+2;Carlos Eduardo Silva;Fonoaudiologia
+3;Mariana Costa;Terapia Ocupacional
+4;Joao Pedro Almeida;Psicopedagogia
+5;Fernanda Oliveira;Fisioterapia
+6;Lucas Henrique Santos;Neuropediatria
+7;Camila Rodrigues;Psicologia
+8;Rafael Mendes;Fonoaudiologia
+9;Juliana Ferreira;Terapia Ocupacional
+10;Bruno Carvalho;Psicopedagogia
