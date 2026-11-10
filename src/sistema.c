@@ -9,7 +9,8 @@ void inicializar_sistema () {
     int opcao_menu, opcao_consultar_paciente, opcao_gerenciar_atendimento;
 
     abp_inicializar(&sistema.pacientes);
-    recuperar_ultimo_id_cadastrado(&sistema);
+    lista_dupla_inicializar(&sistema.atendimentos);
+    recuperar_info_pacientes(&sistema);
 
     do {
         inicializar_interface();
@@ -49,10 +50,11 @@ void inicializar_sistema () {
         }
     } while (opcao_menu >= 0 && opcao_menu < 7);
     abp_libera(&sistema.pacientes);
+    lista_dupla_libera(&sistema.atendimentos);
 }
 
 
-void recuperar_ultimo_id_cadastrado (sistema_t *sistema) {
+void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info dos pacientes nos arquivos .txt e insere nas estruturas de dados do libprg
         int id;
         char linha[300];
 
@@ -70,13 +72,30 @@ void recuperar_ultimo_id_cadastrado (sistema_t *sistema) {
 
                 if (id > sistema->ultimo_id) {
                     sistema->ultimo_id = id;
-
-                    abp_inserir(&sistema->pacientes, id);
                 }
+                abp_inserir(&sistema->pacientes, id);
             }
         }
         fclose(arquivo);
     }
+
+void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info dos funcionarios nos arquivos .txt e insere nas estruturas de dados do libprg
+    int id;
+    char linha[300];
+
+    FILE *arquivo = fopen("../dados/funcionarios.txt", "r");
+
+    if (arquivo == NULL)
+        return;
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;", &id) == 1) {
+            avl_inserir(&sistema->funcionarios, id);
+        }
+    }
+    fclose(arquivo);
+}
+}
 
 void cadastrar_paciente(sistema_t *sistema) {
     int i = sistema->quantidade_pacientes;
@@ -100,11 +119,6 @@ void cadastrar_paciente(sistema_t *sistema) {
 
     sistema->paciente[i].ID = ++sistema->ultimo_id;
 
-    if (abp_inserir(&sistema->pacientes, sistema->paciente[i].ID)) {
-        printf("PACIENTE CADASTRADO COM SUCESSO!\n");
-    }
-
-
     FILE *arquivo = fopen ("../dados/pacientes.txt", "a");
 
     if (arquivo == NULL) {
@@ -122,9 +136,12 @@ void cadastrar_paciente(sistema_t *sistema) {
 
     fclose(arquivo);
 
-    sistema->quantidade_pacientes++;
-
-    printf("PACIENTE CADASTRADO COM SUCESSO!\n");
+    if (abp_inserir(&sistema->pacientes, sistema->paciente[i].ID)) {
+        sistema->quantidade_pacientes++;
+        printf("PACIENTE CADASTRADO COM SUCESSO!\n");
+    } else {
+        printf("FALAHA AO CADASTRAR!\n");
+    }
 }
 
 void consultar_paciente_nome() {
@@ -210,6 +227,12 @@ void consultar_paciente_ID(sistema_t *sistema) {
 
 void agendar_atendimentos (sistema_t *sistema) {
     printf("\n===== AGENDAR ATENDIMENTO =====\n\n");
+    printf("Digite o ID do paciente: \n");
+
+    printf("Digite o ID do funcionario: \n");
+    printf("Digite uma data para o atendimento: \n");
+    printf("Digite um horario para o atendimento: \n");
+
 
 }
 

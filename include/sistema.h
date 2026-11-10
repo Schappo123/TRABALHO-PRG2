@@ -29,14 +29,19 @@ typedef struct {
 typedef struct {
     paciente_t paciente[100];
     int quantidade_pacientes;
-    funcionario_t funcionario[100];
-    int quantidade_funcionarios;
     int ultimo_id;
     abp_t pacientes;
+
+    funcionario_t funcionario[100];
+    avl_t funcionarios;
+
+    atendimento_t atendimento[100];
+    lista_dupla_t atendimentos;
 } sistema_t;
 
 void inicializar_sistema ();
-void recuperar_ultimo_id_cadastrado (sistema_t *sistema);
+void recuperar_info_pacientes (sistema_t *sistema);
+void recuperar_info_funcionarios (sistema_t *sistema);
 
 void cadastrar_paciente(sistema_t *sistema);
 
