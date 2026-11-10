@@ -18,6 +18,15 @@ typedef struct {
 }funcionario_t;
 
 typedef struct {
+    int ID;
+    int ID_paciente;
+    int ID_profissional;
+    char data[20];
+    char horario[10];
+    char status[20];
+} atendimento_t;
+
+typedef struct {
     paciente_t paciente[100];
     int quantidade_pacientes;
     funcionario_t funcionario[100];
