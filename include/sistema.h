@@ -1,6 +1,8 @@
 #ifndef TRABALHO_PRG2_SISTEMA_H
 #define TRABALHO_PRG2_SISTEMA_H
 
+#include "libprg/libprg.h"
+
 typedef struct {
     int ID;
     char nome[50];
@@ -21,6 +23,7 @@ typedef struct {
     funcionario_t funcionario[100];
     int quantidade_funcionarios;
     int ultimo_id;
+    abp_t pacientes;
 } sistema_t;
 
 void inicializar_sistema ();

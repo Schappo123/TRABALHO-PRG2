@@ -7,6 +7,8 @@
 void inicializar_sistema () {
     sistema_t sistema = {0};
     int opcao, opcao2;
+
+    abp_inicializar(&sistema.pacientes);
     ultimo_id_paciente(&sistema);
 
     do {
@@ -51,6 +53,8 @@ void ultimo_id_paciente (sistema_t *sistema) {
 
                 if (id > sistema->ultimo_id) {
                     sistema->ultimo_id = id;
+
+                    abp_inserir(&sistema->pacientes, id);
                 }
             }
         }
@@ -77,7 +81,12 @@ void cadastrar_paciente(sistema_t *sistema) {
     fgets(sistema->paciente[i].descricao, 100, stdin);
     sistema->paciente[i].descricao[strcspn(sistema->paciente[i].descricao, "\n")] = '\0';
 
-    sistema->paciente[i].ID = i+1;
+    sistema->paciente[i].ID = ++sistema->ultimo_id;
+
+    if (abp_inserir(&sistema->pacientes, sistema->paciente[i].ID)) {
+        printf("PACIENTE CADASTRADO COM SUCESSO!\n");
+    }
+
 
     FILE *arquivo = fopen ("../dados/pacientes.txt", "a");
 
