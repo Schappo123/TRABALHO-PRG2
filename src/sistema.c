@@ -6,36 +6,48 @@
 
 void inicializar_sistema () {
     sistema_t sistema = {0};
-    int opcao, opcao2;
+    int opcao_menu, opcao_consultar_paciente, opcao_gerenciar_atendimento;
 
     abp_inicializar(&sistema.pacientes);
     recuperar_ultimo_id_cadastrado(&sistema);
 
     do {
         inicializar_interface();
-        scanf("%d", &opcao);
+        scanf("%d", &opcao_menu);
 
-        switch (opcao) {
+        switch (opcao_menu) {
             case 1: {
                 cadastrar_paciente(&sistema);
                 break;
             }
             case 2: {
                 consultar_paciente();
-                scanf("%d", &opcao2);
-                if (opcao2 == 1) {
+                scanf("%d", &opcao_consultar_paciente);
+                if (opcao_consultar_paciente == 1) {
                     consultar_paciente_nome();
-                } else if (opcao2 == 2) {
+                } else if (opcao_consultar_paciente == 2) {
                     consultar_paciente_ID(&sistema);
-                } else if (opcao2 == 0) {
+                } else if (opcao_consultar_paciente == 0) {
                     break;
                 }
             }
             case 3: {
-
+                gerenciar_atendimentos();
+                scanf("%d", &opcao_gerenciar_atendimento);
+                if (opcao_gerenciar_atendimento == 1) {
+                    agendar_atendimentos (&sistema);
+                } else if (opcao_gerenciar_atendimento == 2) {
+                    consultar_atendimentos (&sistema);
+                } else if (opcao_gerenciar_atendimento == 3) {
+                    cancelar_atendimentos (&sistema);
+                } else if (opcao_gerenciar_atendimento == 4) {
+                    alterar_atendimentos (&sistema);
+                } else if (opcao_gerenciar_atendimento == 0) {
+                    break;
+                }
             }
         }
-    } while (opcao >= 0 && opcao < 7);
+    } while (opcao_menu >= 0 && opcao_menu < 7);
     abp_libera(&sistema.pacientes);
 }
 
