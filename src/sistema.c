@@ -33,6 +33,7 @@ void inicializar_sistema () {
             }
         }
     } while (opcao >= 0 && opcao < 7);
+    abp_libera(&sistema.pacientes);
 }
 
 void ultimo_id_paciente (sistema_t *sistema) {
