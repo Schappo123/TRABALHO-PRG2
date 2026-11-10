@@ -27,7 +27,6 @@ void gerenciar_atendimentos () {
     printf("1 - Agendar Atendimento\n");
     printf("2 - Consultar Atendimento\n");
     printf("3 - Cancelar Atendimento\n");
-    printf("4 - Alterar Atendimento\n");
     printf("0 - Voltar\n");
     printf("============================================\n");
     printf("Escolha uma opcao: ");

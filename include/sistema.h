@@ -53,6 +53,5 @@ void consultar_paciente_ID(sistema_t *sistema);
 void agendar_atendimentos (sistema_t *sistema);
 void consultar_atendimentos (sistema_t *sistema);
 void cancelar_atendimentos (sistema_t *sistema);
-void alterar_atendimentos (sistema_t *sistema);
 
 #endif //TRABALHO_PRG2_SISTEMA_H

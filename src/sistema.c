@@ -43,8 +43,6 @@ void inicializar_sistema () {
                     consultar_atendimentos (&sistema);
                 } else if (opcao_gerenciar_atendimento == 3) {
                     cancelar_atendimentos (&sistema);
-                } else if (opcao_gerenciar_atendimento == 4) {
-                    alterar_atendimentos (&sistema);
                 } else if (opcao_gerenciar_atendimento == 0) {
                     break;
                 }
@@ -319,10 +317,5 @@ void consultar_atendimentos (sistema_t *sistema) {
 }
 
 void cancelar_atendimentos (sistema_t *sistema) {
-
-}
-
-void alterar_atendimentos (sistema_t *sistema) {
-
 
 }
