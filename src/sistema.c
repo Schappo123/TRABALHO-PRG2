@@ -9,7 +9,7 @@ void inicializar_sistema () {
     int opcao, opcao2;
 
     abp_inicializar(&sistema.pacientes);
-    ultimo_id_paciente(&sistema);
+    recuperar_ultimo_id_cadastrado(&sistema);
 
     do {
         inicializar_interface();
@@ -36,7 +36,7 @@ void inicializar_sistema () {
     abp_libera(&sistema.pacientes);
 }
 
-void ultimo_id_paciente (sistema_t *sistema) {
+void recuperar_ultimo_id_cadastrado (sistema_t *sistema) {
         int id;
         char linha[300];
 

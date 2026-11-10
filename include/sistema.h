@@ -27,7 +27,7 @@ typedef struct {
 } sistema_t;
 
 void inicializar_sistema ();
-void ultimo_id_paciente (sistema_t *sistema);
+void recuperar_ultimo_id_cadastrado (sistema_t *sistema);
 void cadastrar_paciente(sistema_t *sistema);
 void consultar_paciente_nome();
 void consultar_paciente_ID(sistema_t *sistema);
