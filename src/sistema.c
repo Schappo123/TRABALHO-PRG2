@@ -13,6 +13,7 @@ void inicializar_sistema () {
     lista_dupla_inicializar(&sistema.atendimentos);
     recuperar_info_pacientes(&sistema);
     recuperar_info_funcionarios(&sistema);
+    recuperar_info_atendimentos(&sistema);
 
     do {
         inicializar_interface();
@@ -311,11 +312,102 @@ void agendar_atendimentos (sistema_t *sistema) {
     }
 }
 
+void buscar_nome_paciente(int id_paciente, char nome[]) {
+    int id, idade;
+    char linha[300];
+    char data_nascimento[20], descricao[100];
+
+    FILE *arquivo = fopen("../dados/pacientes.txt", "r");
+
+    if (arquivo == NULL)
+        return;
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;%49[^;];%d;%19[^;];%99[^\n]",
+                   &id, nome, &idade, data_nascimento, descricao) == 5) {
+            if (id == id_paciente)
+                break;
+                   }
+    }
+
+    fclose(arquivo);
+}
+
+void buscar_nome_funcionario(int id_funcionario, char nome[]) {
+    int id;
+    char linha[300];
+    char especialidade[50];
+
+    FILE *arquivo = fopen("../dados/funcionarios.txt", "r");
+
+    if (arquivo == NULL)
+        return;
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;%49[^;];%49[^\n]",
+                   &id, nome, especialidade) == 3) {
+            if (id == id_funcionario)
+                break;
+                   }
+    }
+
+    fclose(arquivo);
+}
+
 
 void consultar_atendimentos (sistema_t *sistema) {
+    int id_atendimento;
+    int id, id_paciente, id_funcionario;
 
+    char data[20], horario[10], status[20];
+    char nome_paciente[50] = "";
+    char nome_funcionario[50] = "";
+    char linha[300];
+
+    printf("\n===== CONSULTAR ATENDIMENTO =====\n\n");
+    printf("Digite o ID do atendimento: ");
+    scanf("%d", &id_atendimento);
+
+    if (!lista_dupla_buscar(&sistema->atendimentos, id_atendimento)) {
+        printf("\nAtendimento nao encontrado!\n");
+        return;
+    }
+
+    FILE *arquivo = fopen("../dados/agendamentos.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir agendamentos.txt!\n");
+        return;
+    }
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;%d;%d;%19[^;];%9[^;];%19[^\n]",
+                   &id, &id_paciente, &id_funcionario,
+                   data, horario, status) == 6) {
+
+            if (id == id_atendimento) {
+                break;
+            }
+                   }
+    }
+
+    fclose(arquivo);
+
+    buscar_nome_paciente(id_paciente, nome_paciente);
+    buscar_nome_funcionario(id_funcionario, nome_funcionario);
+
+    printf("\n===== DADOS DO ATENDIMENTO =====\n");
+    printf("Paciente: %s\n", nome_paciente);
+    printf("Funcionario: %s\n", nome_funcionario);
+    printf("Data: %s\n", data);
+    printf("Horario: %s\n", horario);
+    printf("Status: %s\n", status);
 }
 
 void cancelar_atendimentos (sistema_t *sistema) {
+
+}
+
+void alterar_atendimentos (sistema_t *sistema) {
 
 }

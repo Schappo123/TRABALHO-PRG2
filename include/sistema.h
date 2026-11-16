@@ -44,6 +44,7 @@ typedef struct {
 void inicializar_sistema ();
 void recuperar_info_pacientes (sistema_t *sistema);
 void recuperar_info_funcionarios (sistema_t *sistema);
+void recuperar_info_atendimentos (sistema_t *sistema);
 
 void cadastrar_paciente(sistema_t *sistema);
 
@@ -51,7 +52,10 @@ void consultar_paciente_nome();
 void consultar_paciente_ID(sistema_t *sistema);
 
 void agendar_atendimentos (sistema_t *sistema);
+void buscar_nome_paciente(int id_paciente, char nome[]);
+void buscar_nome_funcionario(int id_funcionario, char nome[]);
 void consultar_atendimentos (sistema_t *sistema);
 void cancelar_atendimentos (sistema_t *sistema);
+void alterar_atendimentos (sistema_t *sistema);
 
 #endif //TRABALHO_PRG2_SISTEMA_H
