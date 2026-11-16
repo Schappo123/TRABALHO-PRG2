@@ -371,7 +371,7 @@ void consultar_atendimentos (sistema_t *sistema) {
     scanf("%d", &id_atendimento);
 
     if (!lista_dupla_buscar(&sistema->atendimentos, id_atendimento)) {
-        printf("\nAtendimento nao encontrado!\n");
+        printf("\nAtendimento nao encontrado ou cancelado!\n");
         return;
     }
 
@@ -407,16 +407,17 @@ void consultar_atendimentos (sistema_t *sistema) {
 }
 
 void cancelar_atendimentos (sistema_t *sistema) {
-    int id_atendimento;
+     int id_atendimento;
+    int id, id_paciente, id_funcionario;
+    int encontrou = 0;
+    int ja_cancelado = 0;
+
+    char data[20], horario[10], status[20];
+    char linha[300];
 
     printf("\n===== CANCELAR ATENDIMENTO =====\n\n");
     printf("Digite o ID do atendimento: ");
     scanf("%d", &id_atendimento);
-
-    if (!lista_dupla_buscar(&sistema->atendimentos, id_atendimento)) {
-        printf("\nAtendimento nao encontrado!\n");
-        return;
-    }
 
     FILE *arquivo = fopen("../dados/agendamentos.txt", "r");
 
@@ -425,7 +426,63 @@ void cancelar_atendimentos (sistema_t *sistema) {
         return;
     }
 
+    FILE *temporario = fopen("../dados/agendamentos_temp.txt", "w");
 
+    if (temporario == NULL) {
+        printf("Erro ao criar arquivo temporario!\n");
+        fclose(arquivo);
+        return;
+    }
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;%d;%d;%19[^;];%9[^;];%19[^\n]",
+                   &id, &id_paciente, &id_funcionario,
+                   data, horario, status) == 6) {
+
+            if (id == id_atendimento) {
+                if (strcmp(status, "Agendado") == 0) {
+                    strcpy(status, "Cancelado");
+                    encontrou = 1;
+                } else if (strcmp(status, "Cancelado") == 0) {
+                    ja_cancelado = 1;
+                }
+
+                fprintf(temporario, "%d;%d;%d;%s;%s;%s\n",
+                        id, id_paciente, id_funcionario,
+                        data, horario, status);
+            } else {
+                fputs(linha, temporario);
+            }
+        } else {
+            fputs(linha, temporario);
+        }
+    }
+
+    fclose(arquivo);
+    fclose(temporario);
+
+    if (!encontrou) {
+        remove("../dados/agendamentos_temp.txt");
+
+        if (ja_cancelado)
+            printf("\nEsse atendimento ja foi cancelado!\n");
+        else
+            printf("\nAtendimento nao encontrado!\n");
+
+        return;
+    }
+
+    if (remove("../dados/agendamentos.txt") != 0 ||
+        rename("../dados/agendamentos_temp.txt",
+               "../dados/agendamentos.txt") != 0) {
+        printf("\nErro ao atualizar o arquivo!\n");
+        return;
+    }
+
+    lista_dupla_remover(&sistema->atendimentos, id_atendimento);
+    sistema->quantidade_atendimentos--;
+
+    printf("\nAtendimento cancelado com sucesso!\n");
 }
 
 void alterar_atendimentos (sistema_t *sistema) {
