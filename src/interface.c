@@ -27,7 +27,17 @@ void gerenciar_atendimentos () {
     printf("1 - Agendar Atendimento\n");
     printf("2 - Consultar Atendimento\n");
     printf("3 - Cancelar Atendimento\n");
-    printf("4 - Alterar Atendimento\n");
+    printf("0 - Voltar\n");
+    printf("============================================\n");
+    printf("Escolha uma opcao: ");
+}
+
+void gerenciar_fila_espera () {
+    printf("===== GERENCIAR FILA DE ESPERA =====\n\n");
+    printf("1 - Adicionar paciente a fila\n");
+    printf("2 - Chamar próximo paciente\n");
+    printf("3 - Consultar fila de espera\n");
+    printf("4 - Remover paciente da fila\n");
     printf("0 - Voltar\n");
     printf("============================================\n");
     printf("Escolha uma opcao: ");

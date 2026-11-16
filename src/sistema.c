@@ -6,7 +6,7 @@
 
 void inicializar_sistema () {
     sistema_t sistema = {0};
-    int opcao_menu, opcao_consultar_paciente, opcao_gerenciar_atendimento;
+    int opcao_menu, opcao_consultar_paciente, opcao_gerenciar_atendimento, opcao_gerenciar_fila_espera;
 
     abp_inicializar(&sistema.pacientes);
     avl_inicializar(&sistema.funcionarios);
@@ -44,11 +44,14 @@ void inicializar_sistema () {
                     consultar_atendimentos (&sistema);
                 } else if (opcao_gerenciar_atendimento == 3) {
                     cancelar_atendimentos (&sistema);
-                } else if (opcao_gerenciar_atendimento == 4) {
-                    alterar_atendimentos(&sistema);
                 } else if (opcao_gerenciar_atendimento == 0) {
                     break;
                 }
+            }
+            case 4: {
+                gerenciar_fila_espera();
+                scanf("%d", &opcao_gerenciar_fila_espera);
+                if ()
             }
         }
     } while (opcao_menu >= 0 && opcao_menu < 7);
@@ -485,6 +488,18 @@ void cancelar_atendimentos (sistema_t *sistema) {
     printf("\nAtendimento cancelado com sucesso!\n");
 }
 
-void alterar_atendimentos (sistema_t *sistema) {
+void adicionar_paciente_fila_espera (sistema_t *sistema) {
+
+}
+
+void chamar_proximo_paciente (sistema_t *sistema) {
+
+}
+
+void consultar_fila_espera (sistema_t *sistema) {
+
+}
+
+void remover_paciente_fila_espera (sistema_t *sistema) {
 
 }

@@ -56,6 +56,10 @@ void buscar_nome_paciente(int id_paciente, char nome[]);
 void buscar_nome_funcionario(int id_funcionario, char nome[]);
 void consultar_atendimentos (sistema_t *sistema);
 void cancelar_atendimentos (sistema_t *sistema);
-void alterar_atendimentos (sistema_t *sistema);
+
+void adicionar_paciente_fila_espera (sistema_t *sistema);
+void chamar_proximo_paciente (sistema_t *sistema);
+void consultar_fila_espera (sistema_t *sistema);
+void remover_paciente_fila_espera (sistema_t *sistema);
 
 #endif //TRABALHO_PRG2_SISTEMA_H
