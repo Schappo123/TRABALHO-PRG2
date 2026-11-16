@@ -34,10 +34,10 @@ void gerenciar_atendimentos () {
 
 void gerenciar_fila_espera () {
     printf("===== GERENCIAR FILA DE ESPERA =====\n\n");
-    printf("1 - Adicionar paciente a fila\n");
+    printf("1 - Adicionar paciente a fila de espera\n");
     printf("2 - Chamar próximo paciente\n");
     printf("3 - Consultar fila de espera\n");
-    printf("4 - Remover paciente da fila\n");
+    printf("4 - Remover paciente da fila de espera\n");
     printf("0 - Voltar\n");
     printf("============================================\n");
     printf("Escolha uma opcao: ");

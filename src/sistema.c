@@ -11,7 +11,7 @@ void inicializar_sistema () {
     abp_inicializar(&sistema.pacientes);
     avl_inicializar(&sistema.funcionarios);
     lista_dupla_inicializar(&sistema.atendimentos);
-    sistema.lista_espera = fila_criar(100);
+    sistema.fila_espera = fila_criar(100);
     recuperar_info_pacientes(&sistema);
     recuperar_info_funcionarios(&sistema);
     recuperar_info_atendimentos(&sistema);
@@ -69,7 +69,7 @@ void inicializar_sistema () {
     abp_libera(&sistema.pacientes);
     avl_libera(&sistema.funcionarios);
     lista_dupla_libera(&sistema.atendimentos);
-    fila_destruir(sistema.lista_espera);
+    fila_destruir(sistema.fila_espera);
 }
 
 
@@ -510,7 +510,27 @@ void adicionar_paciente_fila_espera (sistema_t *sistema) {
         printf("Paciente nao encontrado!\n");
         return;
     }
-    fila_enfileirar(&sistema->lista_espera, id_paciente);
+
+    FILE *arquivo = fopen("../dados/fila_espera.txt", "a");
+
+    if (arquivo == NULL) {
+        printf("\nErro ao abrir o arquivo!\n");
+        return;
+    }
+
+    if (fila_tamanho(sistema->fila_espera) == 100) {
+        printf("\nFila de espera cheia!\n");
+        fclose(arquivo);
+        return;
+    }
+
+    fila_enfileirar(sistema->fila_espera, id_paciente);
+
+    fprintf(arquivo, "%d\n", id_paciente);
+
+    fclose(arquivo);
+
+    printf("\nPaciente adicionado a fila de espera!\n");
 }
 
 void chamar_proximo_paciente (sistema_t *sistema) {

@@ -40,7 +40,7 @@ typedef struct {
     int ultimo_id_atendimentos;
     lista_dupla_t atendimentos;
 
-    fila_t *lista_espera;
+    fila_t *fila_espera;
 } sistema_t;
 
 void inicializar_sistema ();
