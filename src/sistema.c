@@ -11,6 +11,7 @@ void inicializar_sistema () {
     abp_inicializar(&sistema.pacientes);
     avl_inicializar(&sistema.funcionarios);
     lista_dupla_inicializar(&sistema.atendimentos);
+    sistema.lista_espera = fila_criar(100);
     recuperar_info_pacientes(&sistema);
     recuperar_info_funcionarios(&sistema);
     recuperar_info_atendimentos(&sistema);
@@ -68,6 +69,7 @@ void inicializar_sistema () {
     abp_libera(&sistema.pacientes);
     avl_libera(&sistema.funcionarios);
     lista_dupla_libera(&sistema.atendimentos);
+    fila_destruir(sistema.lista_espera);
 }
 
 
@@ -499,7 +501,16 @@ void cancelar_atendimentos (sistema_t *sistema) {
 }
 
 void adicionar_paciente_fila_espera (sistema_t *sistema) {
+    int id_paciente;
+    printf("\n===== ADICIONAR A FILA DE ESPERA =====\n\n");
+    printf("Digite o ID do atendimento: ");
+    scanf("%d", &id_paciente);
 
+    if (!abp_buscar(sistema->pacientes, id_paciente)) {
+        printf("Paciente nao encontrado!\n");
+        return;
+    }
+    fila_enfileirar(&sistema->lista_espera, id_paciente);
 }
 
 void chamar_proximo_paciente (sistema_t *sistema) {

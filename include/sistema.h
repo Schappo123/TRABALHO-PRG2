@@ -39,6 +39,8 @@ typedef struct {
     int quantidade_atendimentos;
     int ultimo_id_atendimentos;
     lista_dupla_t atendimentos;
+
+    fila_t *lista_espera;
 } sistema_t;
 
 void inicializar_sistema ();
