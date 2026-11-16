@@ -44,6 +44,8 @@ void inicializar_sistema () {
                     consultar_atendimentos (&sistema);
                 } else if (opcao_gerenciar_atendimento == 3) {
                     cancelar_atendimentos (&sistema);
+                } else if (opcao_gerenciar_atendimento == 4) {
+                    alterar_atendimentos(&sistema);
                 } else if (opcao_gerenciar_atendimento == 0) {
                     break;
                 }
@@ -101,8 +103,9 @@ void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info do fu
 void recuperar_info_atendimentos (sistema_t *sistema) { //recupera as info do agendamentos.txt e insere na lista encadeada dupla do libprg
     int id;
     char linha[300];
+    char status[20];
 
-    FILE *arquivo = fopen("../dados/pacientes.txt", "r");
+    FILE *arquivo = fopen("../dados/agendamentos.txt", "r");
 
     sistema->quantidade_atendimentos = 0;
     sistema->ultimo_id_atendimentos = 0;
@@ -111,19 +114,18 @@ void recuperar_info_atendimentos (sistema_t *sistema) { //recupera as info do ag
         return;
 
     while (fgets(linha, sizeof(linha), arquivo)) {
-        if (sscanf(linha, "%d;", &id) == 1) {
-            sistema->quantidade_atendimentos++;
-
-            if (id > sistema->ultimo_id_atendimentos) {
+        if (sscanf(linha, "%d;%*d;%*d;%*[^;];%*[^;];%19[^\n]",
+                   &id, status) == 2) {
+            if (id > sistema->ultimo_id_atendimentos)
                 sistema->ultimo_id_atendimentos = id;
-            }
-            lista_dupla_inserir_fim(&sistema->atendimentos, id);
 
-            if (id > sistema->ultimo_id_atendimentos) {
-                sistema->ultimo_id_atendimentos = id;
+            if (strcmp(status, "Agendado") == 0) {
+                sistema->quantidade_atendimentos++;
+                lista_dupla_inserir_fim(&sistema->atendimentos, id);
             }
         }
     }
+
     fclose(arquivo);
 }
 
@@ -405,6 +407,24 @@ void consultar_atendimentos (sistema_t *sistema) {
 }
 
 void cancelar_atendimentos (sistema_t *sistema) {
+    int id_atendimento;
+
+    printf("\n===== CANCELAR ATENDIMENTO =====\n\n");
+    printf("Digite o ID do atendimento: ");
+    scanf("%d", &id_atendimento);
+
+    if (!lista_dupla_buscar(&sistema->atendimentos, id_atendimento)) {
+        printf("\nAtendimento nao encontrado!\n");
+        return;
+    }
+
+    FILE *arquivo = fopen("../dados/agendamentos.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir agendamentos.txt!\n");
+        return;
+    }
+
 
 }
 
