@@ -51,7 +51,17 @@ void inicializar_sistema () {
             case 4: {
                 gerenciar_fila_espera();
                 scanf("%d", &opcao_gerenciar_fila_espera);
-                if ()
+                if (opcao_gerenciar_fila_espera == 1) {
+                    adicionar_paciente_fila_espera(&sistema);
+                } else if (opcao_gerenciar_fila_espera == 2) {
+                    chamar_proximo_paciente(&sistema);
+                } else if (opcao_gerenciar_fila_espera == 3) {
+                    consultar_fila_espera(&sistema);
+                } else if (opcao_gerenciar_fila_espera == 4) {
+                    remover_paciente_fila_espera(&sistema);
+                } else if (opcao_gerenciar_fila_espera == 0) {
+                    break;
+                }
             }
         }
     } while (opcao_menu >= 0 && opcao_menu < 7);
