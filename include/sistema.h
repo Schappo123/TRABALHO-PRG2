@@ -47,6 +47,7 @@ void inicializar_sistema ();
 void recuperar_info_pacientes (sistema_t *sistema);
 void recuperar_info_funcionarios (sistema_t *sistema);
 void recuperar_info_atendimentos (sistema_t *sistema);
+void recuperar_info_fila_espera (sistema_t *sistema);
 
 void cadastrar_paciente(sistema_t *sistema);
 

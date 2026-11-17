@@ -15,6 +15,7 @@ void inicializar_sistema () {
     recuperar_info_pacientes(&sistema);
     recuperar_info_funcionarios(&sistema);
     recuperar_info_atendimentos(&sistema);
+    recuperar_info_fila_espera(&sistema);
 
     do {
         inicializar_interface();
@@ -141,6 +142,22 @@ void recuperar_info_atendimentos (sistema_t *sistema) { //recupera as info do ag
         }
     }
 
+    fclose(arquivo);
+}
+
+void recuperar_info_fila_espera (sistema_t *sistema) {
+    int id;
+    char linha[300];
+
+    FILE *arquivo = fopen("../dados/fila_de_espera.txt", "r");
+
+    if (arquivo == NULL) return;
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;", &id) == 1) {
+            fila_enfileirar(sistema->fila_espera, id);
+        }
+    }
     fclose(arquivo);
 }
 
@@ -524,6 +541,10 @@ void adicionar_paciente_fila_espera (sistema_t *sistema) {
         return;
     }
 
+    if (fila_buscar(sistema->fila_espera, id_paciente)) {
+        printf("Paciente ja esta na fila de espera!\n");
+        return;
+    }
 
     fila_enfileirar(sistema->fila_espera, id_paciente);
 
@@ -537,8 +558,6 @@ void adicionar_paciente_fila_espera (sistema_t *sistema) {
 void chamar_proximo_paciente (sistema_t *sistema) {
     int proxima_paciente;
     proxima_paciente = fila_desinfileirar(sistema->fila_espera);
-
-
 }
 
 void consultar_fila_espera (sistema_t *sistema) {
