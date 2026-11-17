@@ -511,7 +511,7 @@ void adicionar_paciente_fila_espera (sistema_t *sistema) {
         return;
     }
 
-    FILE *arquivo = fopen("../dados/fila_espera.txt", "a");
+    FILE *arquivo = fopen("../dados/fila_de_espera.txt", "a");
 
     if (arquivo == NULL) {
         printf("\nErro ao abrir o arquivo!\n");
@@ -524,6 +524,7 @@ void adicionar_paciente_fila_espera (sistema_t *sistema) {
         return;
     }
 
+
     fila_enfileirar(sistema->fila_espera, id_paciente);
 
     fprintf(arquivo, "%d\n", id_paciente);
@@ -534,6 +535,9 @@ void adicionar_paciente_fila_espera (sistema_t *sistema) {
 }
 
 void chamar_proximo_paciente (sistema_t *sistema) {
+    int proxima_paciente;
+    proxima_paciente = fila_desinfileirar(sistema->fila_espera);
+
 
 }
 
