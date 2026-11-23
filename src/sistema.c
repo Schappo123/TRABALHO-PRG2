@@ -578,10 +578,10 @@ void cancelar_atendimentos(sistema_t *sistema) {
 //##### FUNÇÕES DE GERENCIAR FILA DE ESPERA #####
 //###############################################
 
-void adicionar_paciente_fila_espera(sistema_t *sistema) {
+void adicionar_paciente_fila_espera(sistema_t *sistema) { //fila de espera para quem não  agendou atendimento
     int id_paciente;
     printf("\n===== ADICIONAR A FILA DE ESPERA =====\n\n");
-    printf("Digite o ID do atendimento: ");
+    printf("Digite o ID do paciente: ");
     scanf("%d", &id_paciente);
 
     if (!abp_buscar(sistema->pacientes, id_paciente)) {
