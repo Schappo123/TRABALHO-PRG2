@@ -7,7 +7,7 @@ void inicializar_interface() {
     printf("2 - Consultar Paciente\n");
     printf("3 - Gerenciar Atendimentos\n");
     printf("4 - Gerenciar Fila de Espera\n");
-    printf("5 - Consultar Profissionais\n");
+    printf("5 - Consultar Funcionarios\n");
     printf("0 - Sair\n");
     printf("============================================\n");
     printf("Escolha uma opcao: ");

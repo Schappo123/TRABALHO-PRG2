@@ -4,7 +4,7 @@
 #include <string.h>
 #include "libprg/libprg.h"
 
-void inicializar_sistema () {
+void inicializar_sistema() {
     sistema_t sistema = {0};
     int opcao_menu, opcao_consultar_paciente, opcao_gerenciar_atendimento, opcao_gerenciar_fila_espera;
 
@@ -32,13 +32,16 @@ void inicializar_sistema () {
                 if (opcao_consultar_paciente < 0 || opcao_consultar_paciente > 2) {
                     printf("Opção inválida!\n");
                     break;
-                } if (opcao_consultar_paciente == 1) {
+                }
+                if (opcao_consultar_paciente == 1) {
                     consultar_paciente_nome();
                     break;
-                } if (opcao_consultar_paciente == 2) {
+                }
+                if (opcao_consultar_paciente == 2) {
                     consultar_paciente_ID(&sistema);
                     break;
-                } if (opcao_consultar_paciente == 0) {
+                }
+                if (opcao_consultar_paciente == 0) {
                     break;
                 }
             }
@@ -50,14 +53,17 @@ void inicializar_sistema () {
                     break;
                 }
                 if (opcao_gerenciar_atendimento == 1) {
-                    agendar_atendimentos (&sistema);
+                    agendar_atendimentos(&sistema);
                     break;
-                } if (opcao_gerenciar_atendimento == 2) {
-                    consultar_atendimentos (&sistema);
+                }
+                if (opcao_gerenciar_atendimento == 2) {
+                    consultar_atendimentos(&sistema);
                     break;
-                } if (opcao_gerenciar_atendimento == 3) {
-                    cancelar_atendimentos (&sistema);
-                } if (opcao_gerenciar_atendimento == 0) {
+                }
+                if (opcao_gerenciar_atendimento == 3) {
+                    cancelar_atendimentos(&sistema);
+                }
+                if (opcao_gerenciar_atendimento == 0) {
                     break;
                 }
             }
@@ -71,15 +77,22 @@ void inicializar_sistema () {
                 if (opcao_gerenciar_fila_espera == 1) {
                     adicionar_paciente_fila_espera(&sistema);
                     break;
-                } if (opcao_gerenciar_fila_espera == 2) {
+                }
+                if (opcao_gerenciar_fila_espera == 2) {
                     chamar_proximo_paciente(&sistema);
                     break;
-                } if (opcao_gerenciar_fila_espera == 3) {
+                }
+                if (opcao_gerenciar_fila_espera == 3) {
                     consultar_fila_espera(&sistema);
                     break;
-                } if (opcao_gerenciar_fila_espera == 0) {
+                }
+                if (opcao_gerenciar_fila_espera == 0) {
                     break;
                 }
+            }
+            case 5: {
+                consultar_funcionarios(&sistema);
+                break;
             }
         }
     } while (opcao_menu >= 0 && opcao_menu < 7);
@@ -90,32 +103,34 @@ void inicializar_sistema () {
 }
 
 
-void recuperar_info_pacientes (sistema_t *sistema) { //recupera as info do pacientes.txt e insere na arvore binaria de pesquisa do libprg
-        int id;
-        char linha[300];
+void recuperar_info_pacientes(sistema_t *sistema) {
+    //recupera as info do pacientes.txt e insere na arvore binaria de pesquisa do libprg
+    int id;
+    char linha[300];
 
-        FILE *arquivo = fopen("../dados/pacientes.txt", "r");
+    FILE *arquivo = fopen("../dados/pacientes.txt", "r");
 
-        sistema->quantidade_pacientes = 0;
-        sistema->ultimo_id_pacientes = 0;
+    sistema->quantidade_pacientes = 0;
+    sistema->ultimo_id_pacientes = 0;
 
-        if (arquivo == NULL)
-            return;
+    if (arquivo == NULL)
+        return;
 
-        while (fgets(linha, sizeof(linha), arquivo)) {
-            if (sscanf(linha, "%d;", &id) == 1) {
-                sistema->quantidade_pacientes++;
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;", &id) == 1) {
+            sistema->quantidade_pacientes++;
 
-                if (id > sistema->ultimo_id_pacientes) {
-                    sistema->ultimo_id_pacientes = id;
-                }
-                abp_inserir(&sistema->pacientes, id);
+            if (id > sistema->ultimo_id_pacientes) {
+                sistema->ultimo_id_pacientes = id;
             }
+            abp_inserir(&sistema->pacientes, id);
         }
-        fclose(arquivo);
     }
+    fclose(arquivo);
+}
 
-void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info do funcionarios.txt e insere na AVL do libprg
+void recuperar_info_funcionarios(sistema_t *sistema) {
+    //recupera as info do funcionarios.txt e insere na AVL do libprg
     int id;
     char linha[300];
 
@@ -132,7 +147,8 @@ void recuperar_info_funcionarios (sistema_t *sistema) { //recupera as info do fu
     fclose(arquivo);
 }
 
-void recuperar_info_atendimentos (sistema_t *sistema) { //recupera as info do agendamentos.txt e insere na lista encadeada dupla do libprg
+void recuperar_info_atendimentos(sistema_t *sistema) {
+    //recupera as info do agendamentos.txt e insere na lista encadeada dupla do libprg
     int id;
     char linha[300];
     char status[20];
@@ -161,7 +177,7 @@ void recuperar_info_atendimentos (sistema_t *sistema) { //recupera as info do ag
     fclose(arquivo);
 }
 
-void recuperar_info_fila_espera (sistema_t *sistema) {
+void recuperar_info_fila_espera(sistema_t *sistema) {
     int id;
     char linha[300];
 
@@ -184,7 +200,8 @@ void cadastrar_paciente(sistema_t *sistema) {
     printf("Digite o nome do paciente: ");
     getchar(); // remove o "espaço" que fica no buffer.
     fgets(sistema->paciente[i].nome, 50, stdin);
-    sistema->paciente[i].nome[strcspn(sistema->paciente[i].nome, "\n")] = '\0'; // remove o "\n" e "\0" do final do arquivo.
+    sistema->paciente[i].nome[strcspn(sistema->paciente[i].nome, "\n")] = '\0';
+    // remove o "\n" e "\0" do final do arquivo.
 
     printf("\nDigite a idade do paciente: ");
     scanf("%d", &sistema->paciente[i].idade);
@@ -199,7 +216,7 @@ void cadastrar_paciente(sistema_t *sistema) {
 
     sistema->paciente[i].ID = ++sistema->ultimo_id_pacientes;
 
-    FILE *arquivo = fopen ("../dados/pacientes.txt", "a");
+    FILE *arquivo = fopen("../dados/pacientes.txt", "a");
 
     if (arquivo == NULL) {
         printf("\nErro ao abrir o arquivo!\n");
@@ -208,11 +225,11 @@ void cadastrar_paciente(sistema_t *sistema) {
     }
 
     fprintf(arquivo, "%d;%s;%d;%s;%s\n",
-    sistema->paciente[i].ID,
-    sistema->paciente[i].nome,
-    sistema->paciente[i].idade,
-    sistema->paciente[i].data_nascimento,
-    sistema->paciente[i].descricao);
+            sistema->paciente[i].ID,
+            sistema->paciente[i].nome,
+            sistema->paciente[i].idade,
+            sistema->paciente[i].data_nascimento,
+            sistema->paciente[i].descricao);
 
 
     fclose(arquivo);
@@ -236,21 +253,21 @@ void consultar_paciente_nome() {
     fgets(nome, 50, stdin);
     nome[strcspn(nome, "\n")] = '\0';
 
-    FILE *arquivo = fopen ("../dados/pacientes.txt", "r");
+    FILE *arquivo = fopen("../dados/pacientes.txt", "r");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");
         return;
     }
     while (fgets(linha, sizeof(linha), arquivo) != NULL) {
-        sscanf (linha, "%d;%49[^;];%d;%19[^;];%99[^\n]",
-        &paciente.ID,
-        paciente.nome,
-        &paciente.idade,
-        paciente.data_nascimento,
-        paciente.descricao);
+        sscanf(linha, "%d;%49[^;];%d;%19[^;];%99[^\n]",
+               &paciente.ID,
+               paciente.nome,
+               &paciente.idade,
+               paciente.data_nascimento,
+               paciente.descricao);
 
-        if (strcmp (nome, paciente.nome) == 0) {
+        if (strcmp(nome, paciente.nome) == 0) {
             printf("===== PACIENTE ENCONTRADO =====\n\n");
             printf("ID: %d\n", paciente.ID);
             printf("Nome: %s\n", paciente.nome);
@@ -276,7 +293,7 @@ void consultar_paciente_ID(sistema_t *sistema) {
     scanf("%d", &id);
 
     if (abp_buscar(sistema->pacientes, id)) {
-        FILE *arquivo = fopen ("../dados/pacientes.txt", "r");
+        FILE *arquivo = fopen("../dados/pacientes.txt", "r");
 
         if (arquivo == NULL) {
             printf("Erro ao abrir o arquivo!\n");
@@ -284,12 +301,12 @@ void consultar_paciente_ID(sistema_t *sistema) {
         }
         while (fgets(linha, sizeof(linha), arquivo) != NULL) {
             if (sscanf(linha, "%d;%49[^;];%d;%19[^;];%99[^\n]",
-                &paciente.ID,
-                paciente.nome,
-                &paciente.idade,
-                paciente.data_nascimento,
-                paciente.descricao) != 5) {
-                }
+                       &paciente.ID,
+                       paciente.nome,
+                       &paciente.idade,
+                       paciente.data_nascimento,
+                       paciente.descricao) != 5) {
+            }
             if (paciente.ID == id) {
                 printf("===== PACIENTE ENCONTRADO =====\n\n");
                 printf("ID: %d\n", paciente.ID);
@@ -306,7 +323,7 @@ void consultar_paciente_ID(sistema_t *sistema) {
     }
 }
 
-void agendar_atendimentos (sistema_t *sistema) {
+void agendar_atendimentos(sistema_t *sistema) {
     int id_paciente, id_funcionario;
     atendimento_t atendimento;
 
@@ -338,9 +355,9 @@ void agendar_atendimentos (sistema_t *sistema) {
 
     atendimento.ID = ++sistema->ultimo_id_atendimentos;
 
-    strcpy (atendimento.status, "Agendado");
+    strcpy(atendimento.status, "Agendado");
 
-    FILE *arquivo = fopen ("../dados/agendamentos.txt", "a");
+    FILE *arquivo = fopen("../dados/agendamentos.txt", "a");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");
@@ -377,7 +394,7 @@ void buscar_nome_paciente(int id_paciente, char nome[]) {
                    &id, nome, &idade, data_nascimento, descricao) == 5) {
             if (id == id_paciente)
                 break;
-                   }
+        }
     }
 
     fclose(arquivo);
@@ -398,14 +415,14 @@ void buscar_nome_funcionario(int id_funcionario, char nome[]) {
                    &id, nome, especialidade) == 3) {
             if (id == id_funcionario)
                 break;
-                   }
+        }
     }
 
     fclose(arquivo);
 }
 
 
-void consultar_atendimentos (sistema_t *sistema) {
+void consultar_atendimentos(sistema_t *sistema) {
     int id_atendimento;
     int id, id_paciente, id_funcionario;
 
@@ -434,11 +451,10 @@ void consultar_atendimentos (sistema_t *sistema) {
         if (sscanf(linha, "%d;%d;%d;%19[^;];%9[^;];%19[^\n]",
                    &id, &id_paciente, &id_funcionario,
                    data, horario, status) == 6) {
-
             if (id == id_atendimento) {
                 break;
             }
-                   }
+        }
     }
 
     fclose(arquivo);
@@ -454,8 +470,8 @@ void consultar_atendimentos (sistema_t *sistema) {
     printf("Status: %s\n", status);
 }
 
-void cancelar_atendimentos (sistema_t *sistema) {
-     int id_atendimento;
+void cancelar_atendimentos(sistema_t *sistema) {
+    int id_atendimento;
     int id, id_paciente, id_funcionario;
     int encontrou = 0;
     int ja_cancelado = 0;
@@ -486,7 +502,6 @@ void cancelar_atendimentos (sistema_t *sistema) {
         if (sscanf(linha, "%d;%d;%d;%19[^;];%9[^;];%19[^\n]",
                    &id, &id_paciente, &id_funcionario,
                    data, horario, status) == 6) {
-
             if (id == id_atendimento) {
                 if (strcmp(status, "Agendado") == 0) {
                     strcpy(status, "Cancelado");
@@ -533,7 +548,7 @@ void cancelar_atendimentos (sistema_t *sistema) {
     printf("\nAtendimento cancelado com sucesso!\n");
 }
 
-void adicionar_paciente_fila_espera (sistema_t *sistema) {
+void adicionar_paciente_fila_espera(sistema_t *sistema) {
     int id_paciente;
     printf("\n===== ADICIONAR A FILA DE ESPERA =====\n\n");
     printf("Digite o ID do atendimento: ");
@@ -571,7 +586,7 @@ void adicionar_paciente_fila_espera (sistema_t *sistema) {
     printf("\nPaciente adicionado a fila de espera!\n");
 }
 
-void chamar_proximo_paciente (sistema_t *sistema) {
+void chamar_proximo_paciente(sistema_t *sistema) {
     int proximo_paciente;
     char nome[] = "";
 
@@ -601,8 +616,53 @@ void chamar_proximo_paciente (sistema_t *sistema) {
     fclose(arquivo);
 }
 
-void consultar_fila_espera (sistema_t *sistema) {
+void consultar_fila_espera(sistema_t *sistema) {
     printf("Ordem da fila de espera por ID: ");
     fila_imprimir(sistema->fila_espera);
     printf("\n");
+}
+
+void consultar_funcionarios(sistema_t *sistema) {
+    int id;
+    char linha[100];
+    funcionario_t funcionario;
+    int encontrou = 0;
+
+    printf("Digite o ID do funcionario: \n");
+    scanf("%d", &id);
+
+    if (!avl_buscar(sistema->funcionarios, id)) {
+        printf("FUNCIONARIO NAO ENCONTRADO!\n");
+        return;
+    }
+
+    FILE *arquivo = fopen("../dados/funcionarios.txt", "r");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo!\n");
+        return;
+    }
+
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        if (sscanf(linha, "%d;%49[^;];%49[^\n]",
+                   &funcionario.ID,
+                   funcionario.nome,
+                   funcionario.especialidade) == 3) {
+            if (funcionario.ID == id) {
+                printf("\n===== FUNCIONARIO ENCONTRADO =====\n\n");
+                printf("ID: %d\n", funcionario.ID);
+                printf("Nome: %s\n", funcionario.nome);
+                printf("Especialidade: %s\n", funcionario.especialidade);
+
+                encontrou = 1;
+                break;
+            }
+        }
+    }
+
+    fclose(arquivo);
+
+    if (!encontrou) {
+        printf("FUNCIONARIO NAO ENCONTRADO!\n");
+    }
 }

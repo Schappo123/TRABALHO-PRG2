@@ -1,4 +1,10 @@
-1;gabriel;23;29/07/2003;aura
-2;matheus;23;29/07/2003;aura
-3;cleber;10;22/11/2000;autista
-4;lucas;44;21/05/2010;down
+1;Ana Silva;12;15/03/2014;Dificuldade na comunicação verbal
+2;Pedro Oliveira;8;22/07/2018;Dificuldade de interação social
+3;Lucas Santos;15;10/11/2011;Sensibilidade a estímulos sonoros
+4;Mariana Costa;6;05/02/2020;Dificuldade de concentração
+5;Gabriel Almeida;10;18/09/2016;Dificuldade na comunicação e interação social
+6;Julia Ferreira;9;30/01/2017;Sensibilidade sensorial
+7;Rafael Rodrigues;14;12/06/2012;Dificuldade de adaptação a mudanças na rotina
+8;Beatriz Martins;7;25/12/2018;Dificuldade de interação em grupo
+9;Felipe Gomes;11;08/04/2015;Dificuldade de comunicação não verbal
+10;Laura Ribeiro;5;19/08/2021;Dificuldade de desenvolvimento da linguagem

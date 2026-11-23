@@ -64,4 +64,6 @@ void adicionar_paciente_fila_espera (sistema_t *sistema);
 void chamar_proximo_paciente (sistema_t *sistema);
 void consultar_fila_espera (sistema_t *sistema);
 
+void consultar_funcionarios (sistema_t *sistema);
+
 #endif //TRABALHO_PRG2_SISTEMA_H
