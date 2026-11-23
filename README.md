@@ -37,7 +37,7 @@ Aperte o botão "Run" ou pressione "Shift + F10" para executar o programa, a fun
 Os arquivos .c estão localizados na pasta "src", os arquivos .h estão localizados na pasta "include", os arquivos .txt estão localizados na pasta "dados", e o main.c está localizado na pasta raiz do projeto "TRABALHO-PRG2".
 
 *-> Dificuldades Encontradas:*<br>
-Minha maior dificuldade foi na utilização das funções de manipulação de arquivos, é a única parte do conteúdo que não conheço bem, frequentemente eu tive que pesquisar como usa as funções e como elas funcionam.
+Minha maior dificuldade foi na utilização das funções de manipulação de arquivos, é a única parte do conteúdo que não conheço bem, frequentemente eu tive que pesquisar como usar as funções e como elas funcionam.
 
 *-> Uso de IA:*<br>
 Utilizei IA para me auxiliar em como utilizar as funções de manipulação de arquivos, e também para aprender o que elas realmente fazem.
