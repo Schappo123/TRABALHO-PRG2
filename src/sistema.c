@@ -94,8 +94,14 @@ void inicializar_sistema() {
                 consultar_funcionarios(&sistema);
                 break;
             }
+            case 0: {
+                break;
+            }
+            default: {
+                printf("Opção Inválida!\n");
+            }
         }
-    } while (opcao_menu >= 0 && opcao_menu < 7);
+    } while (opcao_menu > 0 && opcao_menu < 7);
     abp_libera(&sistema.pacientes);
     avl_libera(&sistema.funcionarios);
     lista_dupla_libera(&sistema.atendimentos);
