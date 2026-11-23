@@ -29,22 +29,34 @@ void inicializar_sistema () {
             case 2: {
                 consultar_paciente();
                 scanf("%d", &opcao_consultar_paciente);
+                if (opcao_consultar_paciente < 0 || opcao_consultar_paciente > 2) {
+                    printf("Opção inválida!\n");
+                    break;
+                }
                 if (opcao_consultar_paciente == 1) {
                     consultar_paciente_nome();
-                } else if (opcao_consultar_paciente == 2) {
+                    break;
+                } if (opcao_consultar_paciente == 2) {
                     consultar_paciente_ID(&sistema);
-                } else if (opcao_consultar_paciente == 0) {
+                    break;
+                } if (opcao_consultar_paciente == 0) {
                     break;
                 }
             }
             case 3: {
                 gerenciar_atendimentos();
                 scanf("%d", &opcao_gerenciar_atendimento);
+                if (opcao_gerenciar_atendimento < 0 || opcao_gerenciar_atendimento > 3) {
+                    printf("Opção inválida!\n");
+                    break;
+                }
                 if (opcao_gerenciar_atendimento == 1) {
                     agendar_atendimentos (&sistema);
-                } else if (opcao_gerenciar_atendimento == 2) {
+                    break;
+                } if (opcao_gerenciar_atendimento == 2) {
                     consultar_atendimentos (&sistema);
-                } else if (opcao_gerenciar_atendimento == 3) {
+                    break;
+                } if (opcao_gerenciar_atendimento == 3) {
                     cancelar_atendimentos (&sistema);
                 } else if (opcao_gerenciar_atendimento == 0) {
                     break;
@@ -53,6 +65,10 @@ void inicializar_sistema () {
             case 4: {
                 gerenciar_fila_espera();
                 scanf("%d", &opcao_gerenciar_fila_espera);
+                if (opcao_gerenciar_fila_espera < 0 || opcao_gerenciar_fila_espera > 4) {
+                    printf("Opção inválida!\n");
+                    break;
+                }
                 if (opcao_gerenciar_fila_espera == 1) {
                     adicionar_paciente_fila_espera(&sistema);
                 } else if (opcao_gerenciar_fila_espera == 2) {
@@ -556,8 +572,33 @@ void adicionar_paciente_fila_espera (sistema_t *sistema) {
 }
 
 void chamar_proximo_paciente (sistema_t *sistema) {
-    int proxima_paciente;
-    proxima_paciente = fila_desinfileirar(sistema->fila_espera);
+    int proximo_paciente;
+    char nome[] = "";
+
+    if (fila_vazia(sistema->fila_espera)) {
+        printf("\nFila de espera vazia!\n");
+        return;
+    }
+
+    proximo_paciente = fila_desinfileirar(sistema->fila_espera);
+    buscar_nome_paciente(proximo_paciente, nome);
+
+    printf("\nPaciente chamado: %s\n", nome, proximo_paciente);
+
+    FILE *arquivo = fopen("../dados/fila_de_espera.txt", "w");
+
+    if (arquivo == NULL) {
+        printf("\nErro ao atualizar arquivo!\n");
+        return;
+    }
+
+    int posicao = sistema->fila_espera->inicio;
+
+    for (int i = 0; i < fila_tamanho(sistema->fila_espera); i++) {
+        fprintf(arquivo, "%d\n", sistema->fila_espera->dados[posicao]);
+        posicao = (posicao + 1) % sistema->fila_espera->capacidade;
+    }
+    fclose(arquivo);
 }
 
 void consultar_fila_espera (sistema_t *sistema) {
