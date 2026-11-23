@@ -632,7 +632,7 @@ void consultar_funcionarios(sistema_t *sistema) {
     scanf("%d", &id);
 
     if (!avl_buscar(sistema->funcionarios, id)) {
-        printf("FUNCIONARIO NAO ENCONTRADO!\n");
+        printf("Funcionario não encontrado!\n");
         return;
     }
 
@@ -649,7 +649,6 @@ void consultar_funcionarios(sistema_t *sistema) {
                    funcionario.nome,
                    funcionario.especialidade) == 3) {
             if (funcionario.ID == id) {
-                printf("\n===== FUNCIONARIO ENCONTRADO =====\n\n");
                 printf("ID: %d\n", funcionario.ID);
                 printf("Nome: %s\n", funcionario.nome);
                 printf("Especialidade: %s\n", funcionario.especialidade);
@@ -663,6 +662,6 @@ void consultar_funcionarios(sistema_t *sistema) {
     fclose(arquivo);
 
     if (!encontrou) {
-        printf("FUNCIONARIO NAO ENCONTRADO!\n");
+        printf("Funcionario não encontrado!\n");
     }
 }
