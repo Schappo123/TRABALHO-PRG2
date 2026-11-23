@@ -62,6 +62,7 @@ void inicializar_sistema() {
                 }
                 if (opcao_gerenciar_atendimento == 3) {
                     cancelar_atendimentos(&sistema);
+                    break;
                 }
                 if (opcao_gerenciar_atendimento == 0) {
                     break;
