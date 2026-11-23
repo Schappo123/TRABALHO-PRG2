@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "../include/sistema.h"
 
 void inicializar_interface() {
     printf ("===== SISTEMA DE ATENDIMENTO - CERTEA =====\n\n");
