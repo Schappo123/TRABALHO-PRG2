@@ -36,7 +36,6 @@ void gerenciar_fila_espera () {
     printf("1 - Adicionar paciente a fila de espera\n");
     printf("2 - Chamar próximo paciente\n");
     printf("3 - Consultar fila de espera\n");
-    printf("4 - Remover paciente da fila de espera\n");
     printf("0 - Voltar\n");
     printf("============================================\n");
     printf("Escolha uma opcao: ");
