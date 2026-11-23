@@ -108,6 +108,9 @@ void inicializar_sistema() {
     fila_destruir(sistema.fila_espera);
 }
 
+//###################################################################
+//##### FUNÇÕES DE RECUPERAÇÃO DE INFORMAÇÕES DOS ARQUIVOS .TXT #####
+//###################################################################
 
 void recuperar_info_pacientes(sistema_t *sistema) {
     //recupera as info do pacientes.txt e insere na arvore binaria de pesquisa do libprg
@@ -184,6 +187,7 @@ void recuperar_info_atendimentos(sistema_t *sistema) {
 }
 
 void recuperar_info_fila_espera(sistema_t *sistema) {
+    //recupera as info do fila_de_espera.txt e insere na fila do libprg
     int id;
     char linha[300];
 
@@ -198,6 +202,56 @@ void recuperar_info_fila_espera(sistema_t *sistema) {
     }
     fclose(arquivo);
 }
+
+//################################################################
+//##### FUNÇÕES DE BUSCA DE NOME DE PACIENTES E FUNCIONARIOS #####
+//################################################################
+
+void buscar_nome_paciente(int id_paciente, char nome[]) { //busca o nome do paciente baseado no ID
+    int id, idade;
+    char linha[300];
+    char data_nascimento[20], descricao[100];
+
+    FILE *arquivo = fopen("../dados/pacientes.txt", "r");
+
+    if (arquivo == NULL)
+        return;
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;%49[^;];%d;%19[^;];%99[^\n]",
+                   &id, nome, &idade, data_nascimento, descricao) == 5) {
+            if (id == id_paciente)
+                break;
+        }
+    }
+
+    fclose(arquivo);
+}
+
+void buscar_nome_funcionario(int id_funcionario, char nome[]) { //busca o nome do funcionario baseado no ID
+    int id;
+    char linha[300];
+    char especialidade[50];
+
+    FILE *arquivo = fopen("../dados/funcionarios.txt", "r");
+
+    if (arquivo == NULL)
+        return;
+
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        if (sscanf(linha, "%d;%49[^;];%49[^\n]",
+                   &id, nome, especialidade) == 3) {
+            if (id == id_funcionario)
+                break;
+        }
+    }
+
+    fclose(arquivo);
+}
+
+//###########################################
+//##### FUNÇÃO DE CADASTRO DE PACIENTES #####
+//###########################################
 
 void cadastrar_paciente(sistema_t *sistema) {
     int i = sistema->quantidade_pacientes;
@@ -247,6 +301,10 @@ void cadastrar_paciente(sistema_t *sistema) {
         printf("FALAHA AO CADASTRAR!\n");
     }
 }
+
+//############################################################################
+//##### FUNÇÕES DE CONSULTA DE INFORMAÇÕES DOS PACIENTES PELO NOME OU ID #####
+//############################################################################
 
 void consultar_paciente_nome() {
     char nome[50];
@@ -329,6 +387,10 @@ void consultar_paciente_ID(sistema_t *sistema) {
     }
 }
 
+//#############################################
+//##### FUNÇÕES DE GERENCIAR ATENDIMENTOS #####
+//#############################################
+
 void agendar_atendimentos(sistema_t *sistema) {
     int id_paciente, id_funcionario;
     atendimento_t atendimento;
@@ -384,49 +446,6 @@ void agendar_atendimentos(sistema_t *sistema) {
         printf("\nAtendimento agendado com sucesso!\n");
     }
 }
-
-void buscar_nome_paciente(int id_paciente, char nome[]) {
-    int id, idade;
-    char linha[300];
-    char data_nascimento[20], descricao[100];
-
-    FILE *arquivo = fopen("../dados/pacientes.txt", "r");
-
-    if (arquivo == NULL)
-        return;
-
-    while (fgets(linha, sizeof(linha), arquivo)) {
-        if (sscanf(linha, "%d;%49[^;];%d;%19[^;];%99[^\n]",
-                   &id, nome, &idade, data_nascimento, descricao) == 5) {
-            if (id == id_paciente)
-                break;
-        }
-    }
-
-    fclose(arquivo);
-}
-
-void buscar_nome_funcionario(int id_funcionario, char nome[]) {
-    int id;
-    char linha[300];
-    char especialidade[50];
-
-    FILE *arquivo = fopen("../dados/funcionarios.txt", "r");
-
-    if (arquivo == NULL)
-        return;
-
-    while (fgets(linha, sizeof(linha), arquivo)) {
-        if (sscanf(linha, "%d;%49[^;];%49[^\n]",
-                   &id, nome, especialidade) == 3) {
-            if (id == id_funcionario)
-                break;
-        }
-    }
-
-    fclose(arquivo);
-}
-
 
 void consultar_atendimentos(sistema_t *sistema) {
     int id_atendimento;
@@ -554,6 +573,10 @@ void cancelar_atendimentos(sistema_t *sistema) {
     printf("\nAtendimento cancelado com sucesso!\n");
 }
 
+//###############################################
+//##### FUNÇÕES DE GERENCIAR FILA DE ESPERA #####
+//###############################################
+
 void adicionar_paciente_fila_espera(sistema_t *sistema) {
     int id_paciente;
     printf("\n===== ADICIONAR A FILA DE ESPERA =====\n\n");
@@ -627,6 +650,10 @@ void consultar_fila_espera(sistema_t *sistema) {
     fila_imprimir(sistema->fila_espera);
     printf("\n");
 }
+
+//##############################################################
+//##### FUNÇÃO DE CONSULTA DE INFORMAÇÕES DOS FUNCIONARIOS #####
+//##############################################################
 
 void consultar_funcionarios(sistema_t *sistema) {
     int id;
