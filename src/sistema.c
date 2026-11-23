@@ -32,8 +32,7 @@ void inicializar_sistema () {
                 if (opcao_consultar_paciente < 0 || opcao_consultar_paciente > 2) {
                     printf("Opção inválida!\n");
                     break;
-                }
-                if (opcao_consultar_paciente == 1) {
+                } if (opcao_consultar_paciente == 1) {
                     consultar_paciente_nome();
                     break;
                 } if (opcao_consultar_paciente == 2) {
@@ -58,7 +57,7 @@ void inicializar_sistema () {
                     break;
                 } if (opcao_gerenciar_atendimento == 3) {
                     cancelar_atendimentos (&sistema);
-                } else if (opcao_gerenciar_atendimento == 0) {
+                } if (opcao_gerenciar_atendimento == 0) {
                     break;
                 }
             }
@@ -71,13 +70,14 @@ void inicializar_sistema () {
                 }
                 if (opcao_gerenciar_fila_espera == 1) {
                     adicionar_paciente_fila_espera(&sistema);
-                } else if (opcao_gerenciar_fila_espera == 2) {
+                    break;
+                } if (opcao_gerenciar_fila_espera == 2) {
                     chamar_proximo_paciente(&sistema);
-                } else if (opcao_gerenciar_fila_espera == 3) {
+                    break;
+                } if (opcao_gerenciar_fila_espera == 3) {
                     consultar_fila_espera(&sistema);
-                } else if (opcao_gerenciar_fila_espera == 4) {
-                    remover_paciente_fila_espera(&sistema);
-                } else if (opcao_gerenciar_fila_espera == 0) {
+                    break;
+                } if (opcao_gerenciar_fila_espera == 0) {
                     break;
                 }
             }
@@ -602,9 +602,7 @@ void chamar_proximo_paciente (sistema_t *sistema) {
 }
 
 void consultar_fila_espera (sistema_t *sistema) {
-
-}
-
-void remover_paciente_fila_espera (sistema_t *sistema) {
-
+    printf("Ordem da fila de espera por ID: ");
+    fila_imprimir(sistema->fila_espera);
+    printf("\n");
 }

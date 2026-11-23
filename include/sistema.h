@@ -63,6 +63,5 @@ void cancelar_atendimentos (sistema_t *sistema);
 void adicionar_paciente_fila_espera (sistema_t *sistema);
 void chamar_proximo_paciente (sistema_t *sistema);
 void consultar_fila_espera (sistema_t *sistema);
-void remover_paciente_fila_espera (sistema_t *sistema);
 
 #endif //TRABALHO_PRG2_SISTEMA_H
